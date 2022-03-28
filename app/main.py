@@ -1,5 +1,11 @@
-from fastapi import FastAPI
-from app.models import models
+from fastapi import FastAPI, Depends, HTTPException
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import PlainTextResponse
+
+from sqlalchemy.orm import Session
+
+from app.api import crud
+from app.models import models, schemas
 from app.db.database import engine, SessionLocal
 
 description = """
@@ -24,6 +30,7 @@ app = FastAPI(
     description=description
 )
 
+
 def get_db():
     db = SessionLocal()
     try:
@@ -35,3 +42,19 @@ def get_db():
 def hello_world():
 
     return "Hello world"
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return PlainTextResponse(str(exc), status_code=400)
+
+
+@app.post("/api/webhook", response_model=schemas.RecordCreate)
+def invoke_webhook(record: schemas.SensorRecord, db: Session = Depends(get_db)):
+
+    try:
+        return_object = crud.create_record(db=db, record=record)
+        return return_object
+
+    except:
+        raise HTTPException(status_code=400, detail="Bad Request")
