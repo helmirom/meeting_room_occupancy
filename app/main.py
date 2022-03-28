@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from app.models import models
+from app.db.database import engine
 
 description = """
 
@@ -14,6 +16,8 @@ The API allows:
 * **Read The occupancy of a specific room** .
 * **Read The occupancy of a specific room at a specific instant** .
 """
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Meeting room occupancy API 🚀🚀",
