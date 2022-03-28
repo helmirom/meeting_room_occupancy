@@ -38,6 +38,7 @@ def get_db():
     finally:
         db.close()
 
+
 @app.get("/")
 def hello_world():
 
@@ -58,3 +59,12 @@ def invoke_webhook(record: schemas.SensorRecord, db: Session = Depends(get_db)):
 
     except:
         raise HTTPException(status_code=400, detail="Bad Request")
+
+
+@app.get("/api/sensors/", response_model=schemas.Sensors)
+def get_sensors_list(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    items = crud.get_sensors(db)
+    result_object = {
+        "sensors": items
+    }
+    return result_object

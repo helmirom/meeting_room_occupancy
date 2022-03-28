@@ -9,3 +9,11 @@ def create_record(db: Session, record: schemas.SensorRecord):
     db.commit()
     db.refresh(db_record)
     return {"message": "OK"}
+
+
+def get_sensors(db: Session):
+    query = db.query(models.SensorRecords.sensor).group_by(models.SensorRecords.sensor).all()
+    sensors = [sensor[0] for sensor in query]
+
+    return sensors
+

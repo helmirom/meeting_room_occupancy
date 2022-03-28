@@ -11,3 +11,6 @@ class SensorRecord(BaseModel):
     in_count: int
     out: int
 
+
+class Sensors(BaseModel):
+    sensors: list
