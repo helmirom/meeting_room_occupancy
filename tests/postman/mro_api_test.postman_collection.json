@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "39fc18fb-fe9b-4955-b377-bcb86636023b",
+		"name": "mro_api_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/webhook",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sensor\":\"abcd\",\"ts\":\"2018-11-14T13:34:49Z\",\"in\":3,\"out\":2}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1/api/webhook",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"webhook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/sensors",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1/api/sensors",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"sensors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/sensors/<sensor>/occupancy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1/api/sensors/abd/occupancy",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"sensors",
+						"abd",
+						"occupancy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/sensors/<sensor>/occupancy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1/sensors/abcd/occupancy?atInstant=2028-11-14T13:34:49Z",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"sensors",
+						"abcd",
+						"occupancy"
+					],
+					"query": [
+						{
+							"key": "atInstant",
+							"value": "2028-11-14T13:34:49Z"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
