@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.models import models
-from app.db.database import engine
+from app.db.database import engine, SessionLocal
 
 description = """
 
@@ -24,6 +24,12 @@ app = FastAPI(
     description=description
 )
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @app.get("/")
 def hello_world():
