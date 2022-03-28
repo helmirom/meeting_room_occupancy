@@ -15,11 +15,11 @@ def test_occupancy(client, endpoints):
     record = {
         "sensor": sensor,
         "ts": datetime.datetime.isoformat(datetime.datetime.now()),
-        "in": 3,
+        "in_count": 3,
         "out": 2,
     }
     response_post = client.post(endpoints["webhook"], json=record)
-    assert response_post.status_code == 201
+    assert response_post.status_code == 200
 
     response_occupancy = client.get(endpoint)
     assert response_occupancy.status_code == 200
