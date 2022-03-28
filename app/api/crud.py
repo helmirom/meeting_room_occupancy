@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 from app.models import models, schemas
 
@@ -16,4 +17,14 @@ def get_sensors(db: Session):
     sensors = [sensor[0] for sensor in query]
 
     return sensors
+
+
+def get_occupancy(db: Session, sensor: str):
+
+    try:
+        occupancy = db.query(func.sum(models.SensorRecords.in_count - models.SensorRecords.out)).filter(models.SensorRecords.sensor == sensor).first()[0]
+        return occupancy
+    except:
+        raise
+
 

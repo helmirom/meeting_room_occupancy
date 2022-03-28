@@ -14,3 +14,9 @@ class SensorRecord(BaseModel):
 
 class Sensors(BaseModel):
     sensors: list
+
+
+class Occupancy(BaseModel):
+    sensor: str
+    inside: int
+

@@ -23,5 +23,6 @@ def test_occupancy(client, endpoints):
 
     response_occupancy = client.get(endpoint)
     assert response_occupancy.status_code == 200
-    assert response_occupancy.json["sensor"] == sensor
-    assert response_occupancy.json["inside"] == 1
+    print(response_occupancy.__dict__)
+    assert response_occupancy.json()["sensor"] == sensor
+    assert response_occupancy.json()["inside"] == 1

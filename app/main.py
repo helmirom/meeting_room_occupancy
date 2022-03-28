@@ -68,3 +68,19 @@ def get_sensors_list(skip: int = 0, limit: int = 100, db: Session = Depends(get_
         "sensors": items
     }
     return result_object
+
+
+@app.get("/api/sensors/{sensor}/occupancy", response_model=schemas.Occupancy)
+def get_occupancy_for_sensor(sensor: str, db: Session = Depends(get_db)):
+    try:
+        occupancy = crud.get_occupancy(db, sensor=sensor)
+        if not occupancy:
+            raise HTTPException(status_code=400, detail="Bad Request")
+        result_object = {
+            "sensor": sensor,
+            "inside": occupancy
+        }
+        return result_object
+
+    except:
+        raise HTTPException(status_code=404, detail="Not Found")
