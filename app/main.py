@@ -1,12 +1,11 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
-
 from sqlalchemy.orm import Session
 
 from app.api import crud
+from app.db.database import SessionLocal, engine
 from app.models import models, schemas
-from app.db.database import engine, SessionLocal
 
 description = """
 
@@ -25,10 +24,7 @@ The API allows users to:
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(
-    title="Meeting room occupancy API 🚀🚀",
-    description=description
-)
+app = FastAPI(title="Meeting room occupancy API 🚀🚀", description=description)
 
 
 def get_db():
@@ -64,9 +60,7 @@ def invoke_webhook(record: schemas.SensorRecord, db: Session = Depends(get_db)):
 @app.get("/api/sensors/", response_model=schemas.Sensors)
 def get_sensors_list(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     items = crud.get_sensors(db)
-    result_object = {
-        "sensors": items
-    }
+    result_object = {"sensors": items}
     return result_object
 
 
@@ -76,10 +70,7 @@ def get_occupancy_for_sensor(sensor: str, db: Session = Depends(get_db)):
         occupancy = crud.get_occupancy(db, sensor=sensor)
         if not occupancy:
             raise HTTPException(status_code=400, detail="Bad Request")
-        result_object = {
-            "sensor": sensor,
-            "inside": occupancy
-        }
+        result_object = {"sensor": sensor, "inside": occupancy}
         return result_object
 
     except:
@@ -87,14 +78,14 @@ def get_occupancy_for_sensor(sensor: str, db: Session = Depends(get_db)):
 
 
 @app.get("/sensors/{sensor}/occupancy", response_model=schemas.OccupancyAtInstant)
-def get_occupancy_for_sensor_at_given_instant(sensor: str, atInstant: str, db: Session = Depends(get_db)):
+def get_occupancy_for_sensor_at_given_instant(
+    sensor: str, atInstant: str, db: Session = Depends(get_db)
+):
     try:
         occupancy = crud.get_occupancy_at_instant(db, sensor=sensor, instant=atInstant)
         if not occupancy:
             raise HTTPException(status_code=400, detail="Bad Request")
-        result_object = {
-            "inside": occupancy
-        }
+        result_object = {"inside": occupancy}
         return result_object
     except:
         raise HTTPException(status_code=404, detail="Not Found")
