@@ -20,3 +20,6 @@ class Occupancy(BaseModel):
     sensor: str
     inside: int
 
+
+class OccupancyAtInstant(BaseModel):
+    inside: int

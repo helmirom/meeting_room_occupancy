@@ -16,7 +16,7 @@ description = """
 
 ## Sensors
 
-The API allows:
+The API allows users to:
 
 * **Read sensors list** .
 * **Read The occupancy of a specific room** .
@@ -82,5 +82,19 @@ def get_occupancy_for_sensor(sensor: str, db: Session = Depends(get_db)):
         }
         return result_object
 
+    except:
+        raise HTTPException(status_code=404, detail="Not Found")
+
+
+@app.get("/sensors/{sensor}/occupancy", response_model=schemas.OccupancyAtInstant)
+def get_occupancy_for_sensor_at_given_instant(sensor: str, atInstant: str, db: Session = Depends(get_db)):
+    try:
+        occupancy = crud.get_occupancy_at_instant(db, sensor=sensor, instant=atInstant)
+        if not occupancy:
+            raise HTTPException(status_code=400, detail="Bad Request")
+        result_object = {
+            "inside": occupancy
+        }
+        return result_object
     except:
         raise HTTPException(status_code=404, detail="Not Found")

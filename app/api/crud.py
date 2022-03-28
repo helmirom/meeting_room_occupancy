@@ -28,3 +28,8 @@ def get_occupancy(db: Session, sensor: str):
         raise
 
 
+def get_occupancy_at_instant(db: Session, sensor: str, instant: str):
+
+    occupancy = db.query(func.sum(models.SensorRecords.in_count - models.SensorRecords.out)).filter(models.SensorRecords.sensor == sensor).filter(models.SensorRecords.ts < instant).first()[0]
+
+    return occupancy

@@ -15,5 +15,5 @@ def test_occupancy_at_instant_sensors_empty(client, endpoints):
     instant_1 = datetime.datetime.isoformat(datetime.datetime.now())
     params["atInstant"] = instant_1
 
-    response_occupancy = client.get(base_endpoint, query_string=params)
+    response_occupancy = client.get(base_endpoint, params=params)
     assert response_occupancy.status_code == 404
