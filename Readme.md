@@ -233,6 +233,54 @@ tests/unit/webhook_query_ok_test.py::test_webhook_query_ok PASSED               
 ======================================================================================================= 9 passed in 0.32s ========================================================================================================
 ```
 
+
+
+## Code Quality Indicators
+To enhance readability and clearness of the code, the below tools are used :
+1. Flake8 
+
+To run flake8, in the project dir:
+>$ flake8
+
+flake8 config file is located under *.flake8*  :
+
+2. black : search for PEP compliance errors.
+
+To run black, in the project dir:
+>$ black . --check
+>$ black . --diff
+>$ black .
+
+Black output, after format :
+```shell
+$ black .
+All done! ✨ 🍰 ✨
+17 files left unchanged.
+```
+
+2. black : search for PEP compliance errors.
+
+To run black, in the project dir:
+>$ black . --check
+>$ black . --diff
+>$ black .
+
+Black output, after format :
+```shell
+$ black .
+All done! ✨ 🍰 ✨
+17 files left unchanged.
+```
+
+3. Isort : to sort all import on project files
+
+Running isort:
+```shell
+$ isort . --check-only
+$ isort 
+```
+
+
 ### API documentation -- OpenAPI
 
 API documentation is available, after booting the stack through :
