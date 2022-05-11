@@ -22,7 +22,7 @@ def invoke_webhook(sensor, in_count, out_count):
     PARAMS = {
         "sensor": sensor,
         "ts": datetime.datetime.isoformat(datetime.datetime.now()),
-        "in": int(in_count),
+        "in_count": int(in_count),
         "out": int(out_count),
     }
     r = requests.post(url=BACKEND_URL + "/api/webhook", json=PARAMS)
